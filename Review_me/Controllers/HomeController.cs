@@ -103,6 +103,9 @@ namespace Review_me.Controllers
                     b.buy_links = null;
                     b.isbns = new List<Isbn>(b.isbns_array);
                     b.isbns_array = null;
+                    if ("0.00".Equals(b.price))
+                        b.price = new Random().Next(0, 40).ToString();
+                    b.discount = new Random().Next(0, 100);
                     dbContext.Books.Add(b);
                     dbContext.SaveChanges();
                 }
@@ -124,7 +127,7 @@ namespace Review_me.Controllers
 
         public IActionResult About()
         {
-            float booksCount = dbContext.Books.Count()/10;
+            float booksCount = dbContext.Books.Count() / 10;
             int booksReviewed = dbContext.ReviewLinks.GroupBy(r => r.bookId).Count();
             ViewBag.booksCount = booksCount;
             ViewBag.booksReviewed = booksReviewed;
@@ -190,7 +193,7 @@ namespace Review_me.Controllers
         public IActionResult DeleteReview(int reviewLinkId)
         {
             ReviewLink reviewLink = dbContext.ReviewLinks.Where(r => r.reviewLinkId == reviewLinkId).FirstOrDefault();
-            if(reviewLink == null)
+            if (reviewLink == null)
             {
                 throw new Exception("Illegal parameter passed");
             }

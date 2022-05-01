@@ -20,6 +20,7 @@ namespace Review_me.Models
         public string publisher { get; set; }
         public string description { get; set; }
         public string price { get; set; }
+        public int discount { get; set; }
         public string title { get; set; }
         public string author { get; set; }
         public string contributor { get; set; }
